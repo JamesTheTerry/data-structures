@@ -7,12 +7,20 @@ var Queue = function() {
   someInstance.head = 0;
   someInstance.tail = 0;
   
-  someInstance.enqueue = queueMethods.enqueue;
-  someInstance.dequeue = queueMethods.dequeue;
-  someInstance.size = queueMethods.size;
+  // someInstance.enqueue = queueMethods.enqueue;
+  // someInstance.dequeue = queueMethods.dequeue;
+  // someInstance.size = queueMethods.size;
+
+  extend(someInstance, queueMethods);
   
   return someInstance;
 
+};
+
+var extend = function(to, from) {
+  for (var key in from) {
+    to[key] = from[key];
+  }
 };
 
 var queueMethods = {};

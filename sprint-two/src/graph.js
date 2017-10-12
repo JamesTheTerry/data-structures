@@ -2,18 +2,51 @@
 
 // Instantiate a new graph
 var Graph = function() {
+  
+  // graph object
+  var graph = Object.create(Graph.prototype);
+  this.id = 0;
+  this.size = 0;
+  
+  // connection object
+  //index number ++
 };
 
 // Add a node to the graph, passing in the node's value.
-Graph.prototype.addNode = function(node) {
+Graph.prototype.addNode = function(value) {
+  // debugger;
+  // make the proper node structure with Nodes class
+  var node = Nodes(value);
+  // set the node's id
+  node.id = this.id;
+  // put the node in the graph object
+  this[this.id] = node;
+  // increase id number for the next node
+  this.id++;
+  // increase size
+  this.size++;
 };
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
-Graph.prototype.contains = function(node) {
+Graph.prototype.contains = function(value) {
+// {} used to keep track
+  // point node gone throught to {}
+      // {}.thisnode
+  // {} does node exist
+  console.log('this: ', this);
+  // debugger;
+  for (var key in this) {
+    console.log('key: ', key);
+    console.log(this[key]);
+    if (this[key].value === value) {
+      return true;
+    }
+  }
+  return false;
 };
 
 // Removes a node from the graph.
-Graph.prototype.removeNode = function(node) {
+Graph.prototype.removeNode = function(value) {
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
@@ -36,4 +69,12 @@ Graph.prototype.forEachNode = function(cb) {
  * Complexity: What is the time complexity of the above functions?
  */
 
-
+var Nodes = function (value) {
+  var node = {};
+  
+  node.value = value; //value
+  node.id = undefined; //ID
+  node.edges = []; //edges
+  
+  return node;
+};

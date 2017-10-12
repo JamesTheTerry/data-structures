@@ -5,6 +5,7 @@ var Graph = function() {
   
   // graph object
   var graph = Object.create(Graph.prototype);
+  this.nodeHolder = {};
   this.id = 0;
   this.size = 0;
   
@@ -20,7 +21,7 @@ Graph.prototype.addNode = function(value) {
   // set the node's id
   node.id = this.id;
   // put the node in the graph object
-  this[this.id] = node;
+  this.nodeHolder[this.id] = node;
   // increase id number for the next node
   this.id++;
   // increase size
@@ -29,16 +30,13 @@ Graph.prototype.addNode = function(value) {
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
 Graph.prototype.contains = function(value) {
-// {} used to keep track
-  // point node gone throught to {}
-      // {}.thisnode
-  // {} does node exist
-  console.log('this: ', this);
-  // debugger;
-  for (var key in this) {
-    console.log('key: ', key);
-    console.log(this[key]);
-    if (this[key].value === value) {
+  // go through all the nodes in the nodeHolder object
+    // if one of them contains the value
+      // return true
+  // otherwise it isn't there and we return false
+  
+  for (var key in this.nodeHolder) {
+    if (this.nodeHolder[key].value === value) {
       return true;
     }
   }

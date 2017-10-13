@@ -6,65 +6,82 @@ var HashTable = function() {
 };
 
 HashTable.prototype.insert = function(k, v) {
+  // hash the key
   var index = getIndexBelowMaxForKey(k, this._limit);
-  
-  /// k is index number, while v is value
-  // uses limitset to store v in this._storage;
-  // debugger;
-  // if (this._storage.get(index + x) !== undefined) {
-  //   this.insert(k, v, x + 1);
-  // } else {
-  //   this._storage.set(index + x, [v, index + x]);
-  // }
-  var toPushToTree = {index: k, value: v};
-  
+  // store key and value that needs to be inserted in var
+  var toPushToHashArray = [k, v];
+
+  // if there is something at this bucket at the index, then go through collision processing
   if (this._storage.get(index) !== undefined) {
-    var toChange = this._storage.get(index);
-    for (var i = 0; i < toChange.length; i++) {
-      if (toChange[i] === k) {
-        /// need to add some checks to see if there a duplicate index
-        /// if collision 
-          //then overwrite
-        // else no collision 
-          //then add another array. 
+    // retrieve the buckets
+    var bucket = this._storage.get(index);
+    
+    // go through each item in bucket
+    for (var i = 0; i < bucket.length; i++) {
+      // if the key is in the bucket
+        // overwrite at that spot
+      // otherwise: put it at the end of the bucket array
+      if (bucket[i][0] === k) {
+        bucket[i] = toPushToHashArray;
+      } else if (i === bucket.length - 1) {
+        bucket.push(toPushToHashArray);
       }
     }
-    toChange.push(toPushToTree);
-    this._storage.set(index, toChange);
+    // save updated bucket to the hash table
+    this._storage.set(index, bucket);
   } else {
-    this._storage.set(index, [toPushToTree]);
+    // else there is no collision, put the value & key at that hash bucket
+    this._storage.set(index, [toPushToHashArray]);
   }
-  
-  
+  ///note: this console log is giving timey wimy closure loops :console.log('Post insert: ', this._storage.get(index)
 };
 
 HashTable.prototype.retrieve = function(k) {
-  var index = getIndexBelowMaxForKey(k, this._limit);
-  // var output = this._storage.get (index);
-  var node = this._storage.get (index);
-
-  if (!node.length || node.length > 1) {
-    for (let i of node) {
-      if (i === k) {
-        console.log ('i:' + i);
-        return i;
-      }
-    }
+  // find the slot in the bucket in the hash table
+  var result = this.retrieveIndividualSlot(k);
+  
+  // if it exists
+  if (result) {
+    // return the value at that key
+    return result[1];
   }
-  return node[0].value;
-  // uses limitedarray.get to retieve the value of index
 };
 
 HashTable.prototype.remove = function(k) {
+  // retrieve the index from the hash table with the key 
   var index = getIndexBelowMaxForKey(k, this._limit);
-  // this._storage.each ( (element, i, collection)=>{
-  //   if (element === k) {
-      
-  //   }
-  // });
+  
+  // store the retrieved bucket into 'slot'
+  var bucket = this._storage.get(index);
+  
+  
+  // splice the bucket to remove the desired slot
+  // store the modified bucket back into the hash table
   this._storage.set (index, undefined);
 };
 
+HashTable.prototype.retrieveIndividualSlot = function (k, slotOrBucket = 'slot') {
+  // find the index for this key
+  var index = getIndexBelowMaxForKey(k, this._limit);
+  // retrieve the bucket from the hash table at this key/index
+  var bucket = this._storage.get (index);
+  
+  // if there actually is a bucket
+  if (bucket) {
+    // go through everything in the bucket
+    for (var i = 0; i < bucket.length; i++) {
+      // if the key we're looking for is in the bucket
+      if (bucket[i][0] === k && slotOrBucket === 'slot') {
+        // return the slot linked to that key in the bucket
+        return bucket[i];
+      // if we are looking for the bucket and key matches the key in the bucket
+      } else if (bucket[i] === k && slotOrBucket === 'bucket') {
+        //return the bucket
+        return bucket;
+      }
+    } 
+  }
+};
 
 
 /*

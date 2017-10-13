@@ -51,7 +51,7 @@ HashTable.prototype.remove = function(k) {
   // retrieve the bucket with key we want to remove
   var bucket = this.retrieveIndividualSlot(k, 'bucket');
   // retrieve the index in the bucket that we want to remove
-  var bucketIndexForRemoval = this.retrieveIndividualSlot(k, 'removalIndex');
+  var bucketIndexForRemoval = this.retrieveIndividualSlot(k, 'index');
 
   // if the buket actually exists
   if (bucket) {
@@ -62,7 +62,7 @@ HashTable.prototype.remove = function(k) {
   }
 };
 
-HashTable.prototype.retrieveIndividualSlot = function (k, slotOrBucket = 'slot') {
+HashTable.prototype.retrieveIndividualSlot = function (k, returnType = 'slot') {
   // find the index for this key
   var index = getIndexBelowMaxForKey(k, this._limit);
   // retrieve the bucket from the hash table at this key/index
@@ -73,15 +73,15 @@ HashTable.prototype.retrieveIndividualSlot = function (k, slotOrBucket = 'slot')
     // go through everything in the bucket
     for (var i = 0; i < bucket.length; i++) {
       // if the key we're looking for is in the bucket
-      if (bucket[i][0] === k && slotOrBucket === 'slot') {
+      if (bucket[i][0] === k && returnType === 'slot') {
         // return the slot linked to that key in the bucket
         return bucket[i];
       // if we are looking for the bucket and key matches the key in the bucket
-      } else if (bucket[i][0] === k && slotOrBucket === 'bucket') {
+      } else if (bucket[i][0] === k && returnType === 'bucket') {
         //return the bucket
         return bucket;
       // if we are looking for the index of the bucket for something we want to remove
-      } else if (bucket[i][0] === k && slotOrBucket === 'removalIndex') {
+      } else if (bucket[i][0] === k && returnType === 'index') {
         // return index value
         return i;
       }
@@ -92,4 +92,8 @@ HashTable.prototype.retrieveIndividualSlot = function (k, slotOrBucket = 'slot')
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ harder to calclulate!!!!
+  insert: avg O(1) worst case O(n)
+  remove: avg O(1) worst cae O(n)
+  retrieve: avg O(1) worst case O(n)
  */

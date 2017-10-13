@@ -18,7 +18,7 @@ var extend = function(to, from) {
 var treeMethods = {};
 
 treeMethods.addChild = function(value) {
-  // var node = Node(value)ss
+  // var node = Node(value)ssgit
   var node = Node(value);
   // push node to this.children
   this.children.push(node);

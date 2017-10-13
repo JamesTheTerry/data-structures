@@ -18,7 +18,7 @@ var extend = function(to, from) {
 var treeMethods = {};
 
 treeMethods.addChild = function(value) {
-  // var node = Node(value)
+  // var node = Node(value)ss
   var node = Node(value);
   // push node to this.children
   this.children.push(node);
@@ -35,7 +35,7 @@ treeMethods.contains = function(target, node, foundVal) {
   //arrays results;
   //code
   //look through if there a true , return true
-
+  
   node = node || this;
   foundVal = foundVal || false;
   if (target === node.value || !!foundVal) {
@@ -54,13 +54,16 @@ treeMethods.contains = function(target, node, foundVal) {
 
 // create Class for tree node creation
 var Node = function (value) {
+  //create empty object
   var node = {};
   
+  //add variables to the object class
   node.value = value;
   node.children = [];
   
+  //extend methods from outside the class into the class
   extend(node, treeMethods);
-  
+  //return the Class Object
   return node;
 };
 

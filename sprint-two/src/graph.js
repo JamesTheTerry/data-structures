@@ -90,10 +90,6 @@ Graph.prototype.forEachNode = function(cb) {
   }
 };
 
-/*
- * Complexity: What is the time complexity of the above functions?
- */
-
 var Nodes = function (value) {
   var node = {};
 
@@ -103,3 +99,14 @@ var Nodes = function (value) {
 
   return node;
 };
+
+/*
+ * Complexity: What is the time complexity of the above functions?
+ *  forEachNode: O(n)
+ *  addEdge: O(1)
+ *  removeEdge: O(1)
+ *  addnode: O(1)
+ *  contains: O(n)
+ *
+ *
+ */

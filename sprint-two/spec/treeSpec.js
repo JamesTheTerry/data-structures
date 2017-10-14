@@ -67,12 +67,15 @@ describe('tree', function() {
     //need to implement some tests to use recoursively use a function 
   //on each function
   it('should be able to directly remove node, and move children to parent node', function() {
+    var callbackedValues = [];
+    var func = function (node) { callbackedValues.push(node.value); };
     tree.addChild(5);
     tree.addChild(6);
     tree.children[0].addChild(7);
     tree.children[1].addChild(8);
     tree.children[1].children[0].addChild(9);
-    tree.traverse (9, function () { console.error('yes') });
+    tree.traverse(func);
+    expect(callbackedValues).to.be.eql([1, 5, 7, 6, 8, 9]);
     // expect(tree.contains(6)).to.equal(false);
     // expect(tree.contains(8)).to.equal(true);
     // expect(tree.contains(9)).to.equal(true);

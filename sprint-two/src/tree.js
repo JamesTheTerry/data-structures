@@ -121,13 +121,13 @@ treeMethods.removeFromParent = function() {
 
 
 
-treeMethods.traverse = function (target, callback, currentNode) {
+treeMethods.traverse = function (callback, currentNode) {
   
   currentNode = currentNode || this;
   
   callback(currentNode);
   currentNode.children.forEach (function (child) {
-    currentNode.traverse(target, callback, child);
+    currentNode.traverse(callback, child);
   });
 };
 

@@ -51,6 +51,34 @@ treeMethods.contains = function(target, node, foundVal) {
   return foundVal;
 };
 
+treeMethods.removeNode = function(target, current, previous) {
+  // store the current node and previous node as we traverse to find the node
+  current = current || this;
+  previous = previous || this;
+  
+  // if we find the target node
+    // remove the target/current node from previous' children array
+    // go through the children and move them to the previous node
+    // delete the current node
+  // else if there are children in the current node
+    // go through all of them recursively
+  if (current.value === target) {
+    previous.children.forEach(function(child, index) {
+      if (child.value === current.value) {
+        previous.children.splice(index, 1);
+      }
+    });
+    current.children.forEach(function(child) {
+      previous.children.push(child);
+    });
+    delete current;
+  } else if (current.children.length > 0) {
+    current.children.forEach(function(child) {
+      treeMethods.removeNode(target, child, current);
+    });
+  }
+};
+
 
 // create Class for tree node creation
 var Node = function (value) {

@@ -21,6 +21,20 @@ setPrototype.remove = function(item) {
   delete this._storage[item];
 };
 
+setPrototype.intersection = function(otherSet) {
+  //set output variable
+  var output = [];
+  //loop though each key in storage
+  for (var key in otherSet._storage) {
+    // loop through each key in other set
+    if (this.contains(key)) {
+      output.push(key);
+    }
+    //if equal then push to output 
+  }
+  return output;
+};
+
 /*
  * Complexity: What is the time complexity of the above functions?
  * add: avg O(1), worst O(n)

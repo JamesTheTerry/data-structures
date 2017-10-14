@@ -50,6 +50,11 @@ describe('linkedList', function() {
     linkedList.removeHead();
     expect(linkedList.contains(4)).to.equal(false);
   });
+  
+  it ('should be able to contain arrays as value', function () {
+    linkedList.addToTail([1, 2, 3, 4, 5]);
+    expect(linkedList.contains([1, 2, 3, 4, 5])).to.equal(true);
+  });
 
   // add more tests here to test the functionality of linkedList
 });

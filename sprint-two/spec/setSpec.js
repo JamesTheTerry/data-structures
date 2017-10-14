@@ -23,5 +23,17 @@ describe('set', function() {
     set.remove('Mel Gibson');
     expect(set.contains('Mel Gibson')).to.equal(false);
   });
+  
+  it('should be able to output intersections', function() {
+    var set2 = Set();
+    
+    set.add('Susan Sarandon');
+    set.add('Danny Glover');
+    set2.add('Susan Sarandon');
+    set2.add('Danny Glover');
+    set2.add('Donald Glover');
+    expect(set.intersection(set2)).to.eql(['Susan Sarandon', 'Danny Glover']);
+    expect(set.intersection(set2)).to.not.eql(['Susan Sarandon', 'Donald Glover']);
+  });
 
 });

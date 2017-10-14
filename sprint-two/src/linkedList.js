@@ -47,7 +47,7 @@ var LinkedList = function() {
     // else
       // recurse to next node
       
-    if (target === node.value) {
+    if (JSON.stringify(target) === JSON.stringify(node.value)) {
       return true;
     } else if (list.tail === node) {
       return false;

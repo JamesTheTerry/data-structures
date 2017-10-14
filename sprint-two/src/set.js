@@ -8,17 +8,18 @@ var setPrototype = {};
 
 setPrototype.add = function(item) {
   // store the item in the obj with the key as the item value
-  this._storage[item] = item;
+  console.log(JSON.stringify(item));
+  this._storage[JSON.stringify(item)] = item;
 };
 
 setPrototype.contains = function(item) {
   // returns bool if the item exists inside the set
-  return this._storage[item] ? true : false;
+  return this._storage[JSON.stringify(item)] ? true : false;
 };
 
 setPrototype.remove = function(item) {
   // deletes the item from the set
-  delete this._storage[item];
+  delete this._storage[JSON.stringify(item)];
 };
 
 setPrototype.intersection = function(otherSet) {
@@ -27,8 +28,8 @@ setPrototype.intersection = function(otherSet) {
   //loop though each key in storage
   for (var key in otherSet._storage) {
     // loop through each key in other set
-    if (this.contains(key)) {
-      output.push(key);
+    if (this.contains(JSON.parse(key))) {
+      output.push(JSON.parse(key));
     }
     //if equal then push to output 
   }

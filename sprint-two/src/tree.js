@@ -117,14 +117,18 @@ treeMethods.removeFromParent = function() {
     parent.children = parent.children.concat(node.children); 
     console.log (parent.children);
   }
-  
-  
 };
 
-treeMethods.findNode = function (target) {
+
+
+treeMethods.traverse = function (target, callback, currentNode) {
   
+  currentNode = currentNode || this;
   
-  return node;
+  callback(currentNode);
+  currentNode.children.forEach (function (child) {
+    currentNode.traverse(target, callback, child);
+  });
 };
 
 /*

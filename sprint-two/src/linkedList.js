@@ -59,17 +59,24 @@ var LinkedList = function() {
   list.removeTail = function () {
     var traverser = list.head;
     
-    while (traverser.next !== list.tail) {
-      traverser = traverser.next;
-    }
-    // traverser is the second to last node
+    if (list.head === list.tail) {
+      var output = traverser.value;
+      list.head = null;
+      list.tail = null;
+      list = {};
+    } else {
+      while (traverser.next && traverser.next !== list.tail) {
+        traverser = traverser.next;
+      }
+      // traverser is the second to last node
 
-    // store the old tail's value as the output
-    // set the tail to traverser
-    // null the new tail's (traverser's) next
-    var output = list.tail.value;
-    list.tail = traverser;
-    traverser.next = null;
+      // store the old tail's value as the output
+      // set the tail to traverser
+      // null the new tail's (traverser's) next
+      var output = list.tail.value;
+      list.tail = traverser;
+      traverser.next = null;
+    }
     
     return output;
   };

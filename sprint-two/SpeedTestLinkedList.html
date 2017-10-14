@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Mocha Tests</title>
+    <title>LinkedList Speed Tests</title>
     <!-- <link rel="stylesheet" href="../lib/mocha/mocha.css" /> -->
     <script src="../lib/jquery/jquery.js"></script>
  <!--    <script src="../lib/mocha/mocha.js"></script>
@@ -26,10 +26,12 @@
     <script type="text/javascript" src="src/doubleLinkedList.js"></script> -->
     <script type="text/javascript">
     
+      var iteration = 2500; 
+      
       var setupList = function () {
         var linkedList = LinkedList();
         //setup a lot of random
-        for (var i = 0; i < 2500; i++) {
+        for (var i = 0; i < iteration; i++) {
           var randomNum = Math.floor(Math.random() * 1000);
           linkedList.addToTail(randomNum);
           // console.log(i);
@@ -40,9 +42,9 @@
 
       
       var useAsQueue = function () {
-        console('test');
+
         var linkedList = setupList();
-        for (var i = 0; i < 2500; i++) {
+        for (var i = 0; i < iteration; i++) {
           linkedList.removeHead();
         }
       };
@@ -50,7 +52,7 @@
 
       var useAsStack = function (linkedList) {
         var linkedList = setupList();
-        for (var i = 0; i < 2500; i++) {
+        for (var i = 0; i < iteration; i++) {
           linkedList.removeTail();
         }
       };

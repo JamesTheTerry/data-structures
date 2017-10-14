@@ -55,6 +55,24 @@ var LinkedList = function() {
       return list.contains(target, node.next);
     }
   };
+  
+  list.removeTail = function () {
+    var traverser = list.head;
+    
+    while (traverser.next !== list.tail) {
+      traverser = traverser.next;
+    }
+    // traverser is the second to last node
+
+    // store the old tail's value as the output
+    // set the tail to traverser
+    // null the new tail's (traverser's) next
+    var output = list.tail.value;
+    list.tail = traverser;
+    traverser.next = null;
+    
+    return output;
+  };
 
   return list;
 };

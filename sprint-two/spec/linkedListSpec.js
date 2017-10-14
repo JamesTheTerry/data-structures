@@ -54,6 +54,22 @@ describe('linkedList', function() {
   it ('should be able to contain arrays as value', function () {
     linkedList.addToTail([1, 2, 3, 4, 5]);
     expect(linkedList.contains([1, 2, 3, 4, 5])).to.equal(true);
+  });  
+  
+  
+  it ('should return a value when removing tail', function () {
+    linkedList.addToTail(1);
+    linkedList.addToTail(2);
+    linkedList.addToTail(3);
+    linkedList.addToTail(4);
+    linkedList.addToTail(5);
+    var tailValue = linkedList.removeTail ();
+    expect(linkedList.contains(1)).to.equal(true);
+    expect(linkedList.contains(2)).to.equal(true);
+    expect(linkedList.contains(3)).to.equal(true);
+    expect(linkedList.contains(4)).to.equal(true);
+    expect(linkedList.contains(5)).to.equal(false);
+    expect(tailValue).to.equal(5);
   });
 
   // add more tests here to test the functionality of linkedList

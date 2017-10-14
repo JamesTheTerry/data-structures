@@ -1,4 +1,5 @@
 var HashTable = function() {
+  this._size = 0;
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
 };
@@ -23,13 +24,18 @@ HashTable.prototype.insert = function(k, v) {
         bucket[i] = toPushToHashArray;
       } else if (i === bucket.length - 1) {
         bucket.push(toPushToHashArray);
+        this._size++;
       }
     }
     // save updated bucket to the hash table
     this._storage.set(index, bucket);
   } else {
     // else there is no collision, put the value & key at that hash bucket
+    this._size++;
     this._storage.set(index, [toPushToHashArray]);
+  }
+  if (this._size > Math.floor (0.75 * this._limit)) {
+    this.resize(Math.floor(this._limit * 2));
   }
   ///note: this console log is giving timey wimy closure loops :console.log('Post insert: ', this._storage.get(index)
 };
@@ -57,12 +63,17 @@ HashTable.prototype.remove = function(k) {
   if (bucket) {
     // remove the key & value from the index
     bucket.splice(bucketIndexForRemoval, 1);
+    // reduce size by 1
+    this._size--;
     // save the bucket without the key value we removed
     this._storage.set (index, bucket);
   }
+  if (this._size < Math.floor (0.25 * this._limit)) {
+    this.resize(Math.floor(this._limit / 2));
+  }
 };
 
-HashTable.prototype.retrieveIndividualSlot = function (k, returnType = 'slot') {
+HashTable.prototype.retrieveIndividualSlot = function(k, returnType = 'slot') {
   // find the index for this key
   var index = getIndexBelowMaxForKey(k, this._limit);
   // retrieve the bucket from the hash table at this key/index
@@ -87,6 +98,25 @@ HashTable.prototype.retrieveIndividualSlot = function (k, returnType = 'slot') {
       }
     }
   }
+};
+
+HashTable.prototype.resize = function(newLimit) {
+  var yeOldeBucket = this._storage;
+  
+  // min size of 8
+  newLimit = Math.max(newLimit, 8);
+  if (newLimit === this._limit) { return; }
+  
+  this._limit = newLimit;
+  this._storage = new LimitedArray(newLimit);
+  this._size = 0;
+
+  yeOldeBucket.each(function(bucket) {
+    if (!bucket) { return; }
+    _.each(bucket, function(tuple) {
+      this.insert(tuple[0], tuple[1]);
+    }.bind(this));
+  }.bind(this));
 };
 
 

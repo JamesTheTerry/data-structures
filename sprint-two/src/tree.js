@@ -3,10 +3,26 @@ var Tree = function(value) {
   
   newTree.value = value;
   newTree.children = [];  // fix me - done
-  
+  newTree.parent = null;
   extend(newTree, treeMethods);
   
   return newTree;
+};
+
+// create Class for tree node creation
+var Node = function (value) {
+  //create empty object
+  var node = {};
+  
+  //add variables to the object class
+  node.value = value;
+  node.children = [];
+  node.parent = null;
+  
+  //extend methods from outside the class into the class
+  extend(node, treeMethods);
+  //return the Class Object
+  return node;
 };
 
 var extend = function(to, from) {
@@ -77,22 +93,6 @@ treeMethods.removeNode = function(target, current, previous) {
       treeMethods.removeNode(target, child, current);
     });
   }
-};
-
-
-// create Class for tree node creation
-var Node = function (value) {
-  //create empty object
-  var node = {};
-  
-  //add variables to the object class
-  node.value = value;
-  node.children = [];
-  
-  //extend methods from outside the class into the class
-  extend(node, treeMethods);
-  //return the Class Object
-  return node;
 };
 
 

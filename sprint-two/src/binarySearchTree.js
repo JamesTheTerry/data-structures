@@ -63,6 +63,28 @@ BinarySearchTree.prototype.depthFirstLog = function (callback, current) {
   }
 };
 
+BinarySearchTree.prototype.breadthFirstLog = function (callback, current) {
+  // make a queue array with the root node as it's only value
+  // while the queue isn't empty
+    // set store var to unshift of queue (index 0)
+    // callback on the store var
+    // if store var has a left, push to queue
+    // if store var has a right, push to queue
+
+  var queue = [this];
+  
+  while (queue.length) { // may need queue.lentgh > 0
+    var currentNode = queue.shift();
+    callback (currentNode.value);
+    if (currentNode.left) {
+      queue.push(currentNode.left);
+    }
+    if (currentNode.right) {
+      queue.push(currentNode.right);
+    }
+  }
+};
+
 BinarySearchTree.prototype.traversal = function (value, current) {
   //sets current as a passed in value or this
   current = current || this;
@@ -104,5 +126,6 @@ var BSTnode = function (value) {
  * insert: O(1) - note we used traversal for this
  * contains: O(1) - note we used traversal for this
  * depthFirstLog: O(n)
+ * breadthFirstLog: O(n)
  * travesal: O(log n)
  */

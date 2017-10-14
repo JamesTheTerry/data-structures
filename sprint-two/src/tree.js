@@ -37,6 +37,7 @@ treeMethods.addChild = function(value) {
   // var node = Node(value)
   var node = Node(value);
   // push node to this.children
+  node.parent = this;
   this.children.push(node);
 };
 
@@ -67,6 +68,7 @@ treeMethods.contains = function(target, node, foundVal) {
   return foundVal;
 };
 
+//recorsive method to remove a node
 treeMethods.removeNode = function(target, current, previous) {
   // store the current node and previous node as we traverse to find the node
   current = current || this;
@@ -95,6 +97,35 @@ treeMethods.removeNode = function(target, current, previous) {
   }
 };
 
+// going to refactor removeNode into one that uses the parent property
+treeMethods.removeFromParent = function() {
+
+  ////////////////////////////////////
+  // store current node in node
+  // loop through the parent's children
+    // remove the pointer to node
+  // store node's children in the parents children
+  // debugger;
+  var node = this;
+  var parent = this.parent;
+  if (parent.children && parent.children.length > 0) {
+    for (var i = 0; i < parent.children.length; i++) {
+      if (node === parent.children[i]) { 
+        parent.children.splice(i, 1);
+      }
+    }
+    parent.children = parent.children.concat(node.children); 
+    console.log (parent.children);
+  }
+  
+  
+};
+
+treeMethods.findNode = function (target) {
+  
+  
+  return node;
+};
 
 /*
  * Complexity: What is the time complexity of the above functions?

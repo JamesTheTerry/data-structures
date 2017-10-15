@@ -7,6 +7,10 @@ var BinarySearchTree = function(value) {
   bst.value = value;
   bst.left = null;
   bst.right = null;
+  // bst.minDepth = 0;
+  // bst.maxDepth = 0;
+  bst.depthArray = [];
+  bst.depthTracker = 0;
   
   return bst;
 };
@@ -85,7 +89,7 @@ BinarySearchTree.prototype.breadthFirstLog = function (callback, current) {
   }
 };
 
-BinarySearchTree.prototype.traversal = function (value, current) {
+BinarySearchTree.prototype.traversal = function (value, current, depth = 0) {
   //sets current as a passed in value or this
   current = current || this;
   //sets the tracker to false
@@ -94,6 +98,7 @@ BinarySearchTree.prototype.traversal = function (value, current) {
   //if the value is less than node and left isn't empty
   if (value < current.value && current.left !== null) {
     // recoursive into the left node
+    this.depthTracker = this.depthTracker < depth + 1;
     foundNode = this.traversal(value, current.left);
   // if the value is greater than ndoe and right isn't empty
   } else if (value > current.value && current.right !== null) {
@@ -104,8 +109,33 @@ BinarySearchTree.prototype.traversal = function (value, current) {
     // set the tracker as the current node
     foundNode = current;
   }
+  
   //return the tracker, to allow the information to go backup the recoursive
   return foundNode;
+};
+
+//// this is not done, it is a orphin function right now
+//// needs to be incorperated into resizing the binary tree
+BinarySearchTree.prototype.isResizeNeeded = function() {
+  var depthArray = this.depthArray;
+  // depthArray = [1, 2, 4, 1, 1, 1, 1, 1];
+  var minDepth = 0;
+  for (var i = 0; i < depthArray.length; i++) {
+    if (depthArray[i] < Math.pow(2, i) || i === depthArray.length - 1) {
+      minDepth = i + 1;
+      break;
+    }
+  }
+  console.log('depthArray.length: ', depthArray.length);
+  console.log('minDepth: ', minDepth);
+  // console.log('math min: ', Math.floor(minDepth) * 2);
+  // console.log('math max: ', Math.floor(minDepth) * 2);
+  if (Math.floor(depthArray.length) > Math.floor(minDepth) * 2) {
+    console.log('Resize is needed');
+    return true;
+  }
+  console.log('Resize is NOT needed');
+  return false;
 };
 
 
